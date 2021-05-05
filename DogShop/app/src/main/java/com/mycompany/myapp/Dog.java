@@ -56,8 +56,10 @@ public class Dog {
 			Dog dog = new Dog();
 			String name = "Dog" + i;
 			String breed = "Breed" + i;
+			String age = "" + i;
 			dog.setName(name);
 			dog.setBreed(breed);
+			dog.setAge(age);
 			dogs.add(dog);
 			
 		}
