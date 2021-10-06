@@ -9,6 +9,7 @@ import java.util.List;
 import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.util.Log;
+import android.content.Intent;
 
 public class DogListFragment extends Fragment {
     
@@ -40,7 +41,7 @@ public class DogListFragment extends Fragment {
 		return view;
 	}
 	
-	private class DogViewHolder extends RecyclerView.ViewHolder {
+	private class DogViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 		private TextView mDogName;
 		private TextView mDogAge;
 		
@@ -49,11 +50,18 @@ public class DogListFragment extends Fragment {
 			
 			mDogName = itemView.findViewById(R.id.dog_name);
 			mDogAge = itemView.findViewById(R.id.dog_age);
+			itemView.setOnClickListener(this);
 		}
 		
 		public void bind(Dog dog) {
 			mDogName.setText(dog.getName());
 			mDogAge.setText(dog.getAge());
+		}
+		
+		@Override
+		public void onClick(View v) {
+			Intent intent = DogActivity.newIntent(getActivity(), mDogName.getText().toString(), mDogAge.getText().toString());
+			startActivity(intent);
 		}
 	}
 	

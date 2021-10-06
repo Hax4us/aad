@@ -23,6 +23,10 @@ public class DogFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mDog = new Dog();
+		String name = getActivity().getIntent().getStringExtra("name");
+		String age = getActivity().getIntent().getStringExtra("age");
+		mDog.setName(name);
+		mDog.setAge(age);
 	}
 
 	@Override
@@ -33,7 +37,16 @@ public class DogFragment extends Fragment {
 		mIsInStock = view.findViewById(R.id.fragment_dog_stock_checkbox);
 		mSaveButton = view.findViewById(R.id.fragment_dog_save_button);
 		setUpWidgets();
+
 		return view;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		
+		mDogName.setText(mDog.getName());
+		mDogAge.setText(mDog.getAge());
 	}
 	
 	private void setUpWidgets() {

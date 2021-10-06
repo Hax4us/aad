@@ -4,6 +4,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.Fragment;
+import android.content.Intent;
+import android.content.Context;
 
 public class DogActivity extends AppCompatActivity {
 
@@ -25,5 +27,12 @@ public class DogActivity extends AppCompatActivity {
 		}
 
     }
+	
+	public static Intent newIntent(Context context, String dogName, String dogAge) {
+		Intent intent = new Intent(context, DogActivity.class);
+		intent.putExtra("name", dogName);
+		intent.putExtra("age", dogAge);
+		return intent;
+	}
 
 }
