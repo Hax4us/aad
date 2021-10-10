@@ -50,6 +50,10 @@ public class Dog {
 		return mDogId;
 	}
 	
+	public void setId(UUID id) {
+		mDogId = id;
+	}
+	
 	public static List<Dog> createFakeDogs(int n) {
 		List<Dog> dogs = new ArrayList<>();
 		for (int i = 0; i < n; i++) {

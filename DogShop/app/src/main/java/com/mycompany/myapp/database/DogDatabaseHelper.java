@@ -4,7 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import com.mycompany.myapp.database.DogShopSchema.DogTable;
 
+import android.util.Log;
+
 public class DogDatabaseHelper extends SQLiteOpenHelper {
+	
+	private static final String TAG = "DogDatabaseHelper";
 	
 	private static final String DATABASE_NAME = "dogShopDb.db"; // /data/data/com.mycompany.myapp/databases/DATABASE_NAME.db
 	private static final int VERSION = 1;
@@ -26,6 +30,7 @@ public class DogDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		database.execSQL(SQL_COMMAND);
+		Log.i(TAG, "onCreate()");
 	}
 
 	@Override

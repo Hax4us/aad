@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <item
+        android:id="@+id/item1"
+        android:title="Item"
+		android:icon="@drawable/ic_plus"
+		app:showAsAction="always" />
+	<item 
+		android:id="@+id/item2"
+		android:title="Item2"
+		app:showAsAction="ifRoom" />
+	<item 
+		android:id="@+id/item3"
+		android:title="Item3" 
+		app:showAsAction="never"/>
+	<item 
+		android:id="@+id/item4"
+		android:title="Item4"
+		app:showAsAction="never" />
+    
+</menu>

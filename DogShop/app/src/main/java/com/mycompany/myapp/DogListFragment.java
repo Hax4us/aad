@@ -16,16 +16,19 @@ public class DogListFragment extends Fragment {
     public static String TAG = DogListFragment.class.getSimpleName();
 
 	private RecyclerView mDogListRecyclerView;
+	private TextView mEmtpyListMessage;
 	private DogAdapter mDogAdapter;
 	private List<Dog> mDogList;
-	private DogHandler mDogHandler;
+	private DogDbManager mManager;
+	//private DogHandler mDogHandler;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mDogHandler = DogHandler.get();
-		mDogList = mDogHandler.getDogs();
+		//mDogHandler = DogHandler.get();
+		mManager = DogDbManager.getInstance(getActivity());
+		mDogList = mManager.getDogs();
 		
 		
 	}
@@ -34,6 +37,11 @@ public class DogListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_dog_list, container, false);
 		mDogListRecyclerView = view.findViewById(R.id.dog_list_view);
+		mEmtpyListMessage = view.findViewById(R.id.list_not_found);
+		if (mDogList.isEmpty()) {
+			mDogListRecyclerView.setVisibility(View.INVISIBLE);
+			mEmtpyListMessage.setVisibility(View.VISIBLE);
+		}
 		mDogAdapter = new DogAdapter(mDogList);
 		mDogListRecyclerView.setAdapter(mDogAdapter);
 		mDogListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
