@@ -40,6 +40,14 @@ public class DogDbManager {
 		database.update(DogTable.NAME, values, DogTable.Cols.UDID + " = ?", new String[] {udid});
 	}
 	
+	public boolean deleteDog(Dog dog) {
+		int count = database.delete(DogTable.NAME, DogTable.Cols.UDID + " = ?", new String[] {dog.getId().toString()});
+		if (count == 1) {
+			return true;
+		}
+		return false;
+	}
+	
 	public List<Dog> getDogs() {
 		List<Dog> dogs = new ArrayList<>();
 		Cursor cursor = queryDogs(null, null);

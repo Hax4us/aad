@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.util.Log;
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class DogListFragment extends Fragment {
     
@@ -26,9 +29,11 @@ public class DogListFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		setHasOptionsMenu(true);
+		
 		//mDogHandler = DogHandler.get();
 		mManager = DogDbManager.getInstance(getActivity());
-		mDogList = mManager.getDogs();
+		
 		
 		
 	}
@@ -38,18 +43,56 @@ public class DogListFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_dog_list, container, false);
 		mDogListRecyclerView = view.findViewById(R.id.dog_list_view);
 		mEmtpyListMessage = view.findViewById(R.id.list_not_found);
-		if (mDogList.isEmpty()) {
-			mDogListRecyclerView.setVisibility(View.INVISIBLE);
-			mEmtpyListMessage.setVisibility(View.VISIBLE);
-		}
-		mDogAdapter = new DogAdapter(mDogList);
-		mDogListRecyclerView.setAdapter(mDogAdapter);
 		mDogListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		
 		return view;
 	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		updateUI();
+	}
+	
+	private void updateUI() {
+		mDogList = mManager.getDogs();
+		if (mDogAdapter == null) {
+			mDogAdapter = new DogAdapter(mDogList);
+			mDogListRecyclerView.setAdapter(mDogAdapter);
+		} else {
+			mDogAdapter.updateDogsList(mDogList);
+			mDogAdapter.notifyDataSetChanged();
+		}
+		
+		if (mDogList.isEmpty()) {
+			mDogListRecyclerView.setVisibility(View.GONE);
+			mEmtpyListMessage.setVisibility(View.VISIBLE);
+		} else {
+			mDogListRecyclerView.setVisibility(View.VISIBLE);
+			mEmtpyListMessage.setVisibility(View.GONE);
+		}
+	}
+	
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.main_menu, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case R.id.action_add_dog:
+				Intent intent = new Intent(getActivity(), DogActivity.class);
+				startActivity(intent);
+				return true;
+			default:
+			    return super.onOptionsItemSelected(item);
+		}
+	}
 	
 	private class DogViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+		private Dog dog;
 		private TextView mDogName;
 		private TextView mDogAge;
 		
@@ -62,13 +105,14 @@ public class DogListFragment extends Fragment {
 		}
 		
 		public void bind(Dog dog) {
+			this.dog = dog;
 			mDogName.setText(dog.getName());
 			mDogAge.setText(dog.getAge());
 		}
 		
 		@Override
 		public void onClick(View v) {
-			Intent intent = DogActivity.newIntent(getActivity(), mDogName.getText().toString(), mDogAge.getText().toString());
+			Intent intent = DogActivity.newIntent(getActivity(), dog.getName(), dog.getAge(), dog.getId().toString());
 			startActivity(intent);
 		}
 	}
@@ -96,6 +140,10 @@ public class DogListFragment extends Fragment {
 		@Override
 		public int getItemCount() {
 			return mDogs.size();
+		}
+		
+		public void updateDogsList(List<Dog> dogs) {
+			mDogs = dogs;
 		}
 	}
     

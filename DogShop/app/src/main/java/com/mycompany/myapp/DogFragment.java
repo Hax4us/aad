@@ -7,12 +7,17 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.CheckBox;
 import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import java.util.UUID;
 
 public class DogFragment extends Fragment {
     
     public static String TAG = DogFragment.class.getSimpleName();
 	
 	private EditText mDogName;
+	private DogDbManager manager;
 	private EditText mDogAge;
 	private CheckBox mIsInStock;
 	private Button mSaveButton;
@@ -22,11 +27,19 @@ public class DogFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+	    manager = DogDbManager.getInstance(getActivity());
 		mDog = new Dog();
 		String name = getActivity().getIntent().getStringExtra("name");
 		String age = getActivity().getIntent().getStringExtra("age");
+		if ( getActivity().getIntent().getStringExtra("id") != null) {
+			UUID id = UUID.fromString(getActivity().getIntent().getStringExtra("id"));
+			mDog.setId(id);
+		}
+		
 		mDog.setName(name);
 		mDog.setAge(age);
+		
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -45,9 +58,38 @@ public class DogFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		
-		mDogName.setText(mDog.getName());
-		mDogAge.setText(mDog.getAge());
+		if (mDog.getName() != null) {
+			mDogName.setText(mDog.getName());
+			mDogAge.setText(mDog.getAge());
+		}
+		
 	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.fragment_dog_menu, menu);
+		if (mDog.getName() == null) {
+			menu.getItem(0).setVisible(false);
+		}
+		
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case R.id.action_delete_dog:
+				manager.deleteDog(mDog);
+				getActivity().finish();
+				return true;
+				
+			default: 
+				return super.onOptionsItemSelected(item);
+		}
+		
+	}
+	
+	
 	
 	private void setUpWidgets() {
 		mSaveButton.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +108,8 @@ public class DogFragment extends Fragment {
 		mDog.setName(name);
 		mDog.setAge(age);
 		mDog.setInStock(inStock);
+		
+		manager.addDog(mDog);
 	}
 	
     

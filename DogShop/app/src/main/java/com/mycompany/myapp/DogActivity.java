@@ -13,7 +13,7 @@ public class DogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dog);
-		
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		FragmentManager fm = getSupportFragmentManager();
 		
 		Fragment fragment = fm.findFragmentById(R.id.fragment_container);
@@ -28,10 +28,11 @@ public class DogActivity extends AppCompatActivity {
 
     }
 	
-	public static Intent newIntent(Context context, String dogName, String dogAge) {
+	public static Intent newIntent(Context context, String dogName, String dogAge, String id) {
 		Intent intent = new Intent(context, DogActivity.class);
 		intent.putExtra("name", dogName);
 		intent.putExtra("age", dogAge);
+		intent.putExtra("id", id);
 		return intent;
 	}
 
