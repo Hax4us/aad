@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import java.util.UUID;
+import androidx.appcompat.app.AlertDialog;
+import android.content.DialogInterface;
+import android.util.Log;
 
 public class DogFragment extends Fragment {
     
@@ -79,8 +82,29 @@ public class DogFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 			case R.id.action_delete_dog:
-				manager.deleteDog(mDog);
-				getActivity().finish();
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("DogShop")
+			    .setMessage("Are you sure")
+			    .setCancelable(false)
+			    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Log.d(TAG, which + "");
+						manager.deleteDog(mDog);
+						getActivity().finish();
+					}
+					
+				})
+			    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Log.d(TAG, which + "");
+						dialog.dismiss();
+					}
+				});
+				
+				builder.show();
+				
 				return true;
 				
 			default: 
