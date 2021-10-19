@@ -112,7 +112,7 @@ public class DogListFragment extends Fragment {
 		
 		@Override
 		public void onClick(View v) {
-			Intent intent = DogActivity.newIntent(getActivity(), dog.getName(), dog.getAge(), dog.getId().toString());
+			Intent intent = DogActivity.newIntent(getActivity(), dog.getId().toString());
 			startActivity(intent);
 		}
 	}

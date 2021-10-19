@@ -8,8 +8,15 @@ import java.util.List;
 import java.util.UUID;
 import android.database.Cursor;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import android.util.Log;
 
 public class DogDbManager {
+	
+	private String TAG = "DogDbManager";
 	
 	private DogDatabaseHelper dbHelper;
 	private SQLiteDatabase database;
@@ -70,6 +77,13 @@ public class DogDbManager {
 		String name = cursor.getString(cursor.getColumnIndex(DogTable.Cols.NAME));
 		String age = cursor.getString(cursor.getColumnIndex(DogTable.Cols.AGE));
 		int in_stock = cursor.getInt(cursor.getColumnIndex(DogTable.Cols.IN_STOCK));
+		SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = null;
+		try {
+			date = formater.parse(cursor.getString(cursor.getColumnIndex(DogTable.Cols.IN_STOCK_DATE)));
+		} catch (ParseException e) {
+			Log.e(TAG, e.getMessage());
+		}
 		
 		Dog dog = new Dog();
 		
@@ -81,6 +95,8 @@ public class DogDbManager {
 		} else {
 			dog.setInStock(false);
 		}
+		
+		dog.setDate(date);
 		
 		return dog;
 		
@@ -106,6 +122,7 @@ public class DogDbManager {
 		values.put(DogTable.Cols.AGE, dog.getAge());
 		values.put(DogTable.Cols.UDID, dog.getId().toString());
 		values.put(DogTable.Cols.IN_STOCK, dog.isInStock() ? 1 : 0);
+		values.put(DogTable.Cols.IN_STOCK_DATE, dog.getPrettyDate());
 		
 		return values;
 	}

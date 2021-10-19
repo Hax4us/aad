@@ -2,6 +2,8 @@ package com.mycompany.myapp;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Dog {
 	private String mName;
@@ -9,9 +11,11 @@ public class Dog {
 	private String mAge;
 	private boolean mInStock;
 	private UUID mDogId;
+	private Date mDate;
 	
 	public Dog() {
 		mDogId = UUID.randomUUID();
+		mDate = new Date();
 	}
 
 	public void setBreed(String breed) {
@@ -54,20 +58,16 @@ public class Dog {
 		mDogId = id;
 	}
 	
-	public static List<Dog> createFakeDogs(int n) {
-		List<Dog> dogs = new ArrayList<>();
-		for (int i = 0; i < n; i++) {
-			Dog dog = new Dog();
-			String name = "Dog" + i;
-			String breed = "Breed" + i;
-			String age = "" + i;
-			dog.setName(name);
-			dog.setBreed(breed);
-			dog.setAge(age);
-			dogs.add(dog);
-			
-		}
-		
-		return dogs;
+	public void setDate(Date date) {
+		mDate = date;
+	}
+	
+	public Date getDate() {
+		return mDate;
+	}
+	
+	public String getPrettyDate() {
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		return format.format(mDate);
 	}
 }

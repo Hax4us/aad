@@ -33,10 +33,16 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="In-Stock"/>
+	
+	<Button
+		android:id="@+id/fragment_dog_stock_date"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Set Date" />
 
 	<Button
 		android:id="@+id/fragment_dog_save_button"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/save_button"
 		android:layout_gravity="center_horizontal"/>

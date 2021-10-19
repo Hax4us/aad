@@ -28,10 +28,8 @@ public class DogActivity extends AppCompatActivity {
 
     }
 	
-	public static Intent newIntent(Context context, String dogName, String dogAge, String id) {
+	public static Intent newIntent(Context context, String id) {
 		Intent intent = new Intent(context, DogActivity.class);
-		intent.putExtra("name", dogName);
-		intent.putExtra("age", dogAge);
 		intent.putExtra("id", id);
 		return intent;
 	}

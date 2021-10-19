@@ -20,7 +20,8 @@ public class DogDatabaseHelper extends SQLiteOpenHelper {
 			DogTable.Cols.UDID + ", " +
 			DogTable.Cols.NAME + ", " +
 			DogTable.Cols.AGE + ", " +
-			DogTable.Cols.IN_STOCK +
+			DogTable.Cols.IN_STOCK + ", " +
+			DogTable.Cols.IN_STOCK_DATE +
 			")";
 	
 	public DogDatabaseHelper(Context context) {

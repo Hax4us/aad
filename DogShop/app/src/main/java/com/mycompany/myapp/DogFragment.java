@@ -14,6 +14,11 @@ import java.util.UUID;
 import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
+import android.app.DatePickerDialog;
+import android.widget.DatePicker;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Date;
 
 public class DogFragment extends Fragment {
     
@@ -24,6 +29,7 @@ public class DogFragment extends Fragment {
 	private EditText mDogAge;
 	private CheckBox mIsInStock;
 	private Button mSaveButton;
+	private Button mSetDateButton;
 
 	private Dog mDog;
 	
@@ -31,16 +37,12 @@ public class DogFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	    manager = DogDbManager.getInstance(getActivity());
-		mDog = new Dog();
-		String name = getActivity().getIntent().getStringExtra("name");
-		String age = getActivity().getIntent().getStringExtra("age");
 		if ( getActivity().getIntent().getStringExtra("id") != null) {
 			UUID id = UUID.fromString(getActivity().getIntent().getStringExtra("id"));
-			mDog.setId(id);
+			mDog = manager.getDog(id);
+		} else {
+			mDog = new Dog();
 		}
-		
-		mDog.setName(name);
-		mDog.setAge(age);
 		
 		setHasOptionsMenu(true);
 	}
@@ -52,6 +54,8 @@ public class DogFragment extends Fragment {
 		mDogAge = view.findViewById(R.id.fragment_dog_age);
 		mIsInStock = view.findViewById(R.id.fragment_dog_stock_checkbox);
 		mSaveButton = view.findViewById(R.id.fragment_dog_save_button);
+		mSetDateButton = view.findViewById(R.id.fragment_dog_stock_date);
+		
 		setUpWidgets();
 
 		return view;
@@ -65,7 +69,7 @@ public class DogFragment extends Fragment {
 			mDogName.setText(mDog.getName());
 			mDogAge.setText(mDog.getAge());
 		}
-		
+		updateDateButton();
 	}
 
 	@Override
@@ -114,12 +118,37 @@ public class DogFragment extends Fragment {
 	}
 	
 	
+	private void updateDateButton() {
+		mSetDateButton.setText(mDog.getPrettyDate());
+	}
+	
 	
 	private void setUpWidgets() {
 		mSaveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				saveChanges();
+			}
+		});
+		
+		mSetDateButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(mDog.getDate());
+				int year = calendar.get(Calendar.YEAR);
+				int month = calendar.get(Calendar.MONTH);
+				int day = calendar.get(Calendar.DAY_OF_MONTH);
+				DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+					@Override
+					public void onDateSet(DatePicker picker, int year, int month, int day) {
+						Date date = new GregorianCalendar(year, month, day).getTime();
+						mDog.setDate(date);
+						updateDateButton();
+					}
+					
+				}, year, month, day);
+				datePickerDialog.show();
 			}
 		});
 	}
