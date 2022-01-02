@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
+import com.hax4us.myblogger.fragments.BlogPostListFragment;
 
 public class MainActivity extends AppCompatActivity {
 	
@@ -18,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
 		
 		toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.add(R.id.fragment_container, BlogPostListFragment.newInstance());
+		transaction.commit();
 		
     }
 }
