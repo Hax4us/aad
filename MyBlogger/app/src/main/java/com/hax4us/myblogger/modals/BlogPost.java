@@ -5,7 +5,7 @@ public class BlogPost {
 	private String content;
 	
 	public String getTitle() {
-		return title
+		return title;
 	}
 	
 	public void setTitle(String title) {

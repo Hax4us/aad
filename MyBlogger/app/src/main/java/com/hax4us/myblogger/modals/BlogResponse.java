@@ -6,4 +6,8 @@ import java.util.ArrayList;
 public class BlogResponse {
 	@SerializedName("items")
 	private ArrayList<BlogPost> posts;
+	
+	public ArrayList<BlogPost> getPosts() {
+		return posts;
+	}
 }

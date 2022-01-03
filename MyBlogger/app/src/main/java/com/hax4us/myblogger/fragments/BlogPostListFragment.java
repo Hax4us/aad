@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
+import com.google.gson.Gson;
+import com.hax4us.myblogger.R;
+import com.hax4us.myblogger.modals.BlogResponse;
 import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -16,7 +19,14 @@ import okhttp3.Response;
 public class BlogPostListFragment extends Fragment {
 	
 	private final String TAG = BlogPostListFragment.class.getSimpleName();
-
+	
+	private String BLOGGER_POST_ENDPOINT = "https://www.googleapis.com/blogger/v3/blogs/%s/posts?key=%s&fetchImages=true";
+	
+	private String BLOG_ID = "2029578079756347786";
+	private String KEY = "AIzaSyBAUTeGqgB-0BRUEew3sptZI51lZzcSOD8";
+	
+	private BlogResponse blogResponse;
+	
     public static BlogPostListFragment newInstance() {
         return new BlogPostListFragment();
     }
@@ -43,9 +53,11 @@ public class BlogPostListFragment extends Fragment {
         fetchPostFromBlogger();
     }
 
-    private fetchPostFromBlogger() {
+    private void fetchPostFromBlogger() {
         final OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("").build();
+        Request request = new Request.Builder()
+				.url(String.format(BLOGGER_POST_ENDPOINT, BLOG_ID, KEY))
+				.build();
 
         client.newCall(request)
                 .enqueue(
@@ -63,6 +75,14 @@ public class BlogPostListFragment extends Fragment {
 									return;
 								}
 								
+								try {
+									Gson gson = new Gson();
+									blogResponse = gson.fromJson(response.body().string(), BlogResponse.class);
+								    //Log.d(TAG, response.body().string());
+									Log.d(TAG, blogResponse.getPosts().get(0).getTitle());
+								} catch (IOException e) {
+									
+								}
 							}
                         });
     }

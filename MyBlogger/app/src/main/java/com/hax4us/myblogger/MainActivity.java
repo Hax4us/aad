@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 		
 		toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.add(R.id.fragment_container, BlogPostListFragment.newInstance());
 		transaction.commit();
