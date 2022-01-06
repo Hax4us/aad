@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.hax4us.myblogger.R;
+import com.hax4us.myblogger.adapters.BlogPostListAdapter;
 import com.hax4us.myblogger.modals.BlogResponse;
 import java.io.IOException;
 import okhttp3.Call;
@@ -27,6 +30,9 @@ public class BlogPostListFragment extends Fragment {
 	
 	private BlogResponse blogResponse;
 	
+	private RecyclerView recyclerView;
+	private BlogPostListAdapter adapter;
+	
     public static BlogPostListFragment newInstance() {
         return new BlogPostListFragment();
     }
@@ -43,8 +49,9 @@ public class BlogPostListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View arg0, Bundle arg1) {
-        super.onViewCreated(arg0, arg1);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        recyclerView = view.findViewById(R.id.recycler_view);
+		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
@@ -79,9 +86,19 @@ public class BlogPostListFragment extends Fragment {
 									Gson gson = new Gson();
 									blogResponse = gson.fromJson(response.body().string(), BlogResponse.class);
 								    //Log.d(TAG, response.body().string());
-									Log.d(TAG, blogResponse.getPosts().get(0).getTitle());
-								} catch (IOException e) {
+									adapter = new BlogPostListAdapter(blogResponse.getPosts());
+									getActivity().runOnUiThread(new Runnable() {
+										@Override
+										public void run() {
+											recyclerView.setAdapter(adapter);
+										}
+									});
+						    		
 									
+									Log.d(TAG, blogResponse.getPosts().get(0).getTitle());
+									
+								} catch (IOException e) {
+									Log.e(TAG, "unable to fetch posts : ", e);
 								}
 							}
                         });

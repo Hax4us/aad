@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import com.hax4us.myblogger.fragments.BlogPostListFragment;
 import com.hax4us.myblogger.modals.BlogPost;
 import com.hax4us.myblogger.R;
@@ -31,7 +32,11 @@ public class BlogPostListAdapter extends RecyclerView.Adapter<BlogPostListAdapte
 		}
 		
 		public void bind(BlogPost post) {
-			
+			title.setText(post.getTitle());
+			Glide.with(itemView.getContext())
+					.load(post.getImages().get(0).getUrl())
+					.centerCrop()
+					.into(image);
 		}
 	}
 	
