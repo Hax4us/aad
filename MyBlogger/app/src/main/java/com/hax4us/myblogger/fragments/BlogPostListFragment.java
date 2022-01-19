@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 import com.hax4us.myblogger.R;
 import com.hax4us.myblogger.adapters.BlogPostListAdapter;
@@ -33,6 +34,8 @@ public class BlogPostListFragment extends Fragment {
 	private RecyclerView recyclerView;
 	private BlogPostListAdapter adapter;
 	
+	private ShimmerFrameLayout shimmer;
+	
     public static BlogPostListFragment newInstance() {
         return new BlogPostListFragment();
     }
@@ -51,6 +54,7 @@ public class BlogPostListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         recyclerView = view.findViewById(R.id.recycler_view);
+		shimmer = view.findViewById(R.id.shimmer_view_container);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
@@ -91,6 +95,9 @@ public class BlogPostListFragment extends Fragment {
 										@Override
 										public void run() {
 											recyclerView.setAdapter(adapter);
+											shimmer.stopShimmer();
+											shimmer.setVisibility(View.GONE);
+											recyclerView.setVisibility(View.VISIBLE);
 										}
 									});
 						    		

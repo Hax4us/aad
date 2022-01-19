@@ -2,9 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.MyBlogger" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Primary brand color. -->
-		<item name="android:windowBackground">@color/gray_700</item>
+		<item name="android:windowBackground">@color/gray_900</item>
 		<item name="colorPrimaryDark">@color/gray_900</item>
 		<item name="colorSurface">@color/gray_700</item>
-	
     </style>
+		
+	<style name="AppBar.ThemeOverlay" parent="ThemeOverlay.Material3.Light">
+		<item name="colorSurface">@color/gray_900</item>
+	</style>
 </resources>

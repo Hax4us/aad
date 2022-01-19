@@ -1,38 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-	
-	<com.google.android.material.appbar.AppBarLayout
-		android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-		
-		<androidx.appcompat.widget.Toolbar
-			android:id="@+id/toolbar"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-			
-			<TextView
+    tools:context=".MainActivity" >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppBar.ThemeOverlay" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="MyBlogger"
-				android:textSize="20sp"
-				android:textStyle="bold|italic"
-				android:textColor="@color/white" />
+                android:layout_height="wrap_content"
+                android:text="MyBlogger"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold|italic" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-		</androidx.appcompat.widget.Toolbar>
-			
-	</com.google.android.material.appbar.AppBarLayout>
-		
-	<FrameLayout
+    <FrameLayout
         android:id="@+id/fragment_container"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-	
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
