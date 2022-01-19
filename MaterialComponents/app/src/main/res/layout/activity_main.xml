@@ -9,7 +9,9 @@
 	<com.google.android.material.textfield.TextInputLayout
 		android:id="@+id/textInputLayout1"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"
+		app:boxStrokeColor="@color/textfield_box_stroke_color">
 		
 		<com.google.android.material.textfield.TextInputEditText
 			android:layout_width="match_parent"
