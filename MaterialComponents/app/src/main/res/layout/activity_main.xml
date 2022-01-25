@@ -16,7 +16,9 @@
 		app:hintTextColor="@color/teal_700"
 		app:boxStrokeColor="@color/textfield_box_stroke_color"
 		app:boxStrokeWidth="3dp"
-		app:boxStrokeWidthFocused="5dp">
+		app:boxStrokeWidthFocused="5dp"
+		app:startIconDrawable="@drawable/ic_action_account_circle"
+		app:startIconTint="@color/purple_500">
 		
 		<com.google.android.material.textfield.TextInputEditText
 			android:layout_width="match_parent"
